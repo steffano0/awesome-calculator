@@ -1,0 +1,22 @@
+body {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    margin: 0;
+}
+    
+
+#container {
+    display: grid;
+    border: 1px solid;
+    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    
+}
+
+.screen {
+    grid-column: 1/5;
+}
+    
+
+
