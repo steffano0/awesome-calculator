@@ -7,18 +7,28 @@ const operations = {
 };
 
 function checkNumberLength () {
-    const lengthNumber = textDisplayed.length;
+    const lengthNumber = numberDisplayed.length;
     if (lengthNumber < 16) {
-        textDisplayed += this.textContent;
+        numberDisplayed += this.textContent;
     }
+}
+
+function updateStack () {
+    stack.push(numberDisplayed);
+    numberDisplayed = "";
+    currentOperator = this.textContent;
 }
     
 
 
 
-let textDisplayed = "";
+let numberDisplayed = "";
+let stack = [];
+let currentOperator = ""
 const numbers = Array.from(document.querySelectorAll(".number"));
+const operators = Array.from(document.querySelectorAll(".operator"));
 numbers.forEach(number => number.addEventListener("click", checkNumberLength));
+operators.forEach(operator => operator.addEventListener("click", updateStack));
 
 
 
