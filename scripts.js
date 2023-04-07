@@ -1,9 +1,9 @@
 const operations = {
-    "+": (a,b) => a + b,
-    "-": (a,b) => a - b,
-    "x": (a,b) => a * b,
-    "/": (a,b) => a/b,
-    "^": (a,b) => a ** b,
+    "+": (a,b) => +a + +b,
+    "-": (a,b) => +a - +b,
+    "x": (a,b) => +a * +b,
+    "/": (a,b) => +a/+b,
+    "^": (a,b) => a ** +b,
 };
 
 // Check if the number displayed is less than 16 digits
