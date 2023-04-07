@@ -11,6 +11,7 @@ function checkNumberLength () {
     const lengthNumber = currentNumber.length;
     if (lengthNumber < 16) {
         currentNumber += this.textContent;
+        updateDisplay();
     }
 }
 
@@ -26,6 +27,11 @@ function updateCurrentNumber () {
         console.log(prevNumber);
     }
     currentNumber = "";
+    currentOperator = this.textContent;
+}
+
+function updateDisplay () {
+    display.textContent = currentNumber;
 }
         
    
@@ -35,11 +41,10 @@ let currentNumber = "";
 let currentOperator = "";
 const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
+const display = document.querySelector(".display");
+const subdisplay = document.querySelector(".subdisplay");
 numbers.forEach(number => number.addEventListener("click", checkNumberLength));
-operators.forEach(operator => operator.addEventListener("click", () => { 
-        updateCurrentNumber();
-        currentOperator = operator.textContent;
-    }));
+operators.forEach(operator => operator.addEventListener("click",updateCurrentNumber));
 
 
 
