@@ -14,7 +14,7 @@ body {
     
 }
 
-.screen {
+.screen, .subscreen {
     grid-column: 1/5;
 }
     
