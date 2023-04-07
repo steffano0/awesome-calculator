@@ -26,12 +26,18 @@ function updateCurrentNumber () {
         prevNumber = operations[currentOperator](temp, currentNumber);  
         console.log(prevNumber);
     }
-    currentNumber = "";
     currentOperator = this.textContent;
+    updateSubDisplay();
+    currentNumber = "";
 }
 
 function updateDisplay () {
     display.textContent = currentNumber;
+}
+
+function updateSubDisplay () {
+    subdisplay.textContent = currentNumber + " " + currentOperator;
+    
 }
         
    
