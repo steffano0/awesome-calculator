@@ -11,7 +11,7 @@ function checkNumberLength () {
     const lengthNumber = currentNumber.length;
     if (lengthNumber < 16) {
         currentNumber += this.textContent;
-        updateDisplay();
+        updateDisplay(currentNumber);
     }
 }
 
@@ -27,16 +27,18 @@ function updateCurrentNumber () {
         console.log(prevNumber);
     }
     currentOperator = this.textContent;
+    updateDisplay(prevNumber);
     updateSubDisplay();
     currentNumber = "";
 }
+    
 
-function updateDisplay () {
-    display.textContent = currentNumber;
+function updateDisplay (number) {
+    display.textContent = number;
 }
 
 function updateSubDisplay () {
-    subdisplay.textContent = currentNumber + " " + currentOperator;
+    subdisplay.textContent = prevNumber + " " + currentOperator;
     
 }
         
