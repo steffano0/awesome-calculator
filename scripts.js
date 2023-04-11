@@ -15,18 +15,35 @@ function checkNumberLength () {
     }
 }
 
+function updateOperator (oper) {
+    let operator = oper.classList;
+
+    if (operator.contains("add")) {
+        currentOperator = "+";
+    } else if (operator.contains("substract")) {
+        currentOperator = "-";
+    } else if (operator.contains("multiply")) {
+        currentOperator = "x";
+    } else if (operator.contains("divide")) {
+        currentOperator = "/";
+    } else if (operator.contains("square-root")) {
+        currentOperator = "";
+    } else if (operator.contains("squared")) {
+        currentOperator = "^";
+    }
+
+}
+
 // Update the current number displayed, if an operator is pressed
 function updateCurrentNumber () {
     let temp = "";
     if (prevNumber.length == 0) {
         prevNumber = currentNumber;
-        console.log(prevNumber);
     } else {
-        temp = prevNumber
+        temp = prevNumber;
         prevNumber = operations[currentOperator](temp, currentNumber);  
-        console.log(prevNumber);
     }
-    currentOperator = this.textContent;
+    updateOperator(this);
     updateDisplay(prevNumber);
     updateSubDisplay();
     currentNumber = "";
