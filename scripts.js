@@ -55,8 +55,12 @@ function updateDisplay (number) {
 }
 
 function updateSubDisplay () {
-    subdisplay.textContent = prevNumber + " " + currentOperator;
+    subdisplay.textContent = `${prevNumber} ${currentOperator}`;
     
+}
+
+function manageEqual () {
+    subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
 }
         
    
@@ -64,12 +68,14 @@ function updateSubDisplay () {
 let prevNumber = "";
 let currentNumber = "";
 let currentOperator = "";
+const equal = document.querySelector(".equal");
 const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
 const subdisplay = document.querySelector(".subdisplay");
 numbers.forEach(number => number.addEventListener("click", checkNumberLength));
 operators.forEach(operator => operator.addEventListener("click",updateCurrentNumber));
+equal.addEventListener("click", manageEqual);
 
 
 
