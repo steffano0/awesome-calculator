@@ -1,10 +1,10 @@
-const operations = {
-    "+": (a,b) => +a + +b,
-    "-": (a,b) => +a - +b,
-    "x": (a,b) => +a * +b,
-    "/": (a,b) => +a/+b,
-    "^": (a,b) => a ** +b,
-};
+    const operations = {
+        "+": (a,b) => +a + +b,
+        "-": (a,b) => +a - +b,
+        "x": (a,b) => +a * +b,
+        "/": (a,b) => +a/+b,
+        "^": (a,b) => a ** b,
+    };
 
 // Check if the number displayed is less than 16 digits
 function checkNumberLength () {
@@ -28,7 +28,7 @@ function updateOperator (oper) {
         currentOperator = "/";
     } else if (operator.contains("square-root")) {
         currentOperator = "";
-    } else if (operator.contains("squared")) {
+    } else if (operator.contains("power")) {
         currentOperator = "^";
     }
 
