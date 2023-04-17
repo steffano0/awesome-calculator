@@ -73,6 +73,12 @@ function managePercentage () {
     updateDisplay(currentNumber);
 }
 
+function manageDel () {
+    currentNumber = currentNumber.slice(0, -1);
+    updateDisplay(currentNumber);
+
+}
+
     
 function manageEqual () {
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
@@ -88,6 +94,7 @@ let currentOperator = "";
 const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
 const percentage = document.querySelector(".percentage");
+const del = document.querySelector(".delete");
 const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
@@ -97,6 +104,7 @@ operators.forEach(operator => operator.addEventListener("click",updateCurrentNum
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
 percentage.addEventListener("click", managePercentage);
+del.addEventListener("click", manageDel);
 
 
 
