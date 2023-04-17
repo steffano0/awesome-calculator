@@ -4,7 +4,8 @@
         "x": (a,b) => +a * +b,
         "/": (a,b) => +a/+b,
         "^": (a,b) => a ** b,
-        "\u221A": (a) => a**0.5,
+        "\u221A": (a) => Math.sqrt(a),
+        "%": (a) => a/100,
     };
 
 // Check if the number displayed is less than 16 digits
@@ -33,7 +34,7 @@ function updateOperator (oper) {
 
 }
 
-// Update the current number displayed, if an operator is pressed
+
 function updateCurrentNumber () {
     let temp = "";
     if (prevNumber.length == 0) {
@@ -65,9 +66,14 @@ function manageSquareRoot() {
 
 }
 
- 
-    
+function managePercentage () {
+    currentOperator = "%";
+    subdisplay.textContent = `${currentNumber}%`;
+    currentNumber = operations[currentOperator](currentNumber);
+    updateDisplay(currentNumber);
+}
 
+    
 function manageEqual () {
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
@@ -81,6 +87,7 @@ let currentNumber = "";
 let currentOperator = "";
 const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
+const percentage = document.querySelector(".percentage");
 const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
@@ -89,6 +96,7 @@ numbers.forEach(number => number.addEventListener("click", checkNumberLength));
 operators.forEach(operator => operator.addEventListener("click",updateCurrentNumber));
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
+percentage.addEventListener("click", managePercentage);
 
 
 
