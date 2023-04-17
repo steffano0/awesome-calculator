@@ -4,6 +4,7 @@
         "x": (a,b) => +a * +b,
         "/": (a,b) => +a/+b,
         "^": (a,b) => a ** b,
+        "\u221A": (a) => a**0.5,
     };
 
 // Check if the number displayed is less than 16 digits
@@ -26,8 +27,6 @@ function updateOperator (oper) {
         currentOperator = "x";
     } else if (operator.contains("divide")) {
         currentOperator = "/";
-    } else if (operator.contains("square-root")) {
-        currentOperator = "";
     } else if (operator.contains("power")) {
         currentOperator = "^";
     }
@@ -56,11 +55,23 @@ function updateDisplay (number) {
 
 function updateSubDisplay () {
     subdisplay.textContent = `${prevNumber} ${currentOperator}`;
-    
 }
+    
+function manageSquareRoot() {
+    currentOperator = "\u221A";
+    subdisplay.textContent = `\u221A(${currentNumber})`;
+    currentNumber = operations[currentOperator](currentNumber);
+    updateDisplay(currentNumber);
+
+}
+
+ 
+    
 
 function manageEqual () {
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
+    currentNumber = operations[currentOperator](prevNumber, currentNumber);
+    updateDisplay(currentNumber);
 }
         
    
@@ -69,6 +80,7 @@ let prevNumber = "";
 let currentNumber = "";
 let currentOperator = "";
 const equal = document.querySelector(".equal");
+const squareRoot = document.querySelector(".square-root");
 const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
@@ -76,6 +88,7 @@ const subdisplay = document.querySelector(".subdisplay");
 numbers.forEach(number => number.addEventListener("click", checkNumberLength));
 operators.forEach(operator => operator.addEventListener("click",updateCurrentNumber));
 equal.addEventListener("click", manageEqual);
+squareRoot.addEventListener("click", manageSquareRoot);
 
 
 
