@@ -78,6 +78,18 @@ function manageDel () {
     updateDisplay(currentNumber);
 
 }
+function manageClear() {
+    currentNumber = "";
+    prevNumber = "";
+    currentOperator = "";
+    updateDisplay(currentNumber);
+    updateSubDisplay();
+}
+
+function manageClearEntry () {
+    currentNumber = "";
+    updateDisplay(currentNumber);
+}
 
     
 function manageEqual () {
@@ -95,6 +107,8 @@ const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
 const percentage = document.querySelector(".percentage");
 const del = document.querySelector(".delete");
+const clear = document.querySelector(".clear");
+const clearEntry = document.querySelector(".clear-entry");
 const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
@@ -105,6 +119,8 @@ equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
 percentage.addEventListener("click", managePercentage);
 del.addEventListener("click", manageDel);
+clear.addEventListener("click", manageClear);
+clearEntry.addEventListener("click", manageClearEntry);
 
 
 
