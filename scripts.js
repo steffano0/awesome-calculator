@@ -36,7 +36,7 @@ function updateOperator (oper) {
 
 
 function updateCurrentNumber () {
-    let temp = "";
+    const temp = "";
     if (prevNumber.length == 0) {
         prevNumber = currentNumber;
     } else {
@@ -55,6 +55,9 @@ function updateDisplay (number) {
 }
 
 function updateSubDisplay () {
+    if (prevNumber == "") {
+        prevNumber = "0"
+    }
     subdisplay.textContent = `${prevNumber} ${currentOperator}`;
 }
     
@@ -97,6 +100,13 @@ function manageEqual () {
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
     updateDisplay(currentNumber);
 }
+
+function manageDivideOne () {
+    currentOperator = "/"
+    subdisplay.textContent = `1/(${currentNumber})`;
+    currentNumber = operations[currentOperator](1, currentNumber);
+    updateDisplay(currentNumber);
+}
         
    
     
@@ -106,6 +116,7 @@ let currentOperator = "";
 const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
 const percentage = document.querySelector(".percentage");
+const divideOne = document.querySelector(".divide-one");
 const del = document.querySelector(".delete");
 const clear = document.querySelector(".clear");
 const clearEntry = document.querySelector(".clear-entry");
@@ -118,9 +129,11 @@ operators.forEach(operator => operator.addEventListener("click",updateCurrentNum
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
 percentage.addEventListener("click", managePercentage);
+divideOne.addEventListener("click", manageDivideOne);
 del.addEventListener("click", manageDel);
 clear.addEventListener("click", manageClear);
 clearEntry.addEventListener("click", manageClearEntry);
+
 
 
 
