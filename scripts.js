@@ -66,10 +66,7 @@ function updateDisplay (number) {
 }
 
 function updateSubDisplay () {
-    if (prevNumber == "") {
-        prevNumber = "0"
-    }
-    subdisplay.textContent = `${prevNumber} ${currentOperator}`;
+   subdisplay.textContent = `${prevNumber} ${currentOperator}`;
 }
     
 function manageSquareRoot() {
@@ -107,25 +104,30 @@ function manageClearEntry () {
 
     
 function manageEqual () {
-    if (currentOperator == "") {
+    if (currentOperator == "" || currentNumber == "" || prevNumber == "") {
         return;
-    } 
+    }
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
     updateDisplay(currentNumber);
+    prevNumber = "";
+   
 }
 
 function manageDivideOne () {
+    
     currentOperator = "/"
     subdisplay.textContent = `1/(${currentNumber})`;
     currentNumber = operations[currentOperator](1, currentNumber);
     updateDisplay(currentNumber);
+    
+    
 }
         
    
     
-let prevNumber = "0";
-let currentNumber = "0";
+let prevNumber = 0;
+let currentNumber = 0;
 let currentOperator = "";
 const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
