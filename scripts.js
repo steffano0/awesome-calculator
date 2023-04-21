@@ -41,13 +41,12 @@ function updateOperator (oper) {
 
 function updateCurrentNumber () {
     let temp = "";
-    if (prevNumber.length == 0) {
+    if (prevNumber == 0 && currentNumber != "") {
         prevNumber = currentNumber;
         updateOperator(this);
         updateDisplay(prevNumber);
         updateSubDisplay();
-         
-    } else if (currentNumber != "") { 
+    }  else if (currentNumber != "") { 
         temp = prevNumber;
         prevNumber = operations[currentOperator](temp, currentNumber);
         updateOperator(this);
