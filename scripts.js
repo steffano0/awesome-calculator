@@ -11,7 +11,11 @@
 // Check if the number displayed is less than 16 digits
 function checkNumberLength () {
     const lengthNumber = currentNumber.length;
-    if (lengthNumber < 16) {
+    if (lengthNumber < 16 && currentNumber != "0") {
+        currentNumber += this.textContent;
+        updateDisplay(currentNumber);
+    } else if (currentNumber == "0") {
+        currentNumber = ""
         currentNumber += this.textContent;
         updateDisplay(currentNumber);
     }
@@ -37,16 +41,25 @@ function updateOperator (oper) {
 
 function updateCurrentNumber () {
     let temp = "";
-    if (prevNumber.length == 0) {
+    
+    if (prevNumber == 0 && currentNumber != "") {
         prevNumber = currentNumber;
-    } else {
+        updateOperator(this);
+        updateDisplay(prevNumber);
+        updateSubDisplay();
+         
+    } else if (currentNumber != "") { 
         temp = prevNumber;
-        prevNumber = operations[currentOperator](temp, currentNumber);  
+        prevNumber = operations[currentOperator](temp, currentNumber);
+        updateOperator(this);
+        updateDisplay(prevNumber);
+        
+    } else if (currentNumber == "") {
+        updateOperator(this);
+        updateSubDisplay(); 
     }
-    updateOperator(this);
-    updateDisplay(prevNumber);
-    updateSubDisplay();
-    currentNumber = "";
+    currentNumber = ""; 
+    
 }
     
 
@@ -79,7 +92,7 @@ function manageDel () {
 
 }
 function manageClear() {
-    currentNumber = "";
+    currentNumber = "0";
     prevNumber = "";
     currentOperator = "";
     updateDisplay(currentNumber);
@@ -87,12 +100,15 @@ function manageClear() {
 }
 
 function manageClearEntry () {
-    currentNumber = "";
+    currentNumber = "0";
     updateDisplay(currentNumber);
 }
 
     
 function manageEqual () {
+    if (currentOperator == "") {
+        return;
+    } 
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
     updateDisplay(currentNumber);
@@ -100,8 +116,8 @@ function manageEqual () {
         
    
     
-let prevNumber = "";
-let currentNumber = "";
+let prevNumber = "0";
+let currentNumber = "0";
 let currentOperator = "";
 const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
