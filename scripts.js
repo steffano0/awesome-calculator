@@ -4,7 +4,7 @@
         "x": (a,b) => +a * +b,
         "/": (a,b) => +a/+b,
         "^": (a,b) => a ** b,
-        "\u221A": (a) => Math.sqrt(a),
+        "√": (a) => Math.sqrt(a),
         "%": (a) => a/100,
     };
 
@@ -70,9 +70,14 @@ function updateSubDisplay () {
 }
     
 function manageSquareRoot() {
-    currentOperator = "\u221A";
-    subdisplay.textContent = `\u221A(${currentNumber})`;
-    currentNumber = operations[currentOperator](currentNumber);
+    currentOperator = "√";
+    if (currentNumber == "") {
+        subdisplay.textContent = `\u221A(${prevNumber})`;
+        currentNumber = operations[currentOperator](prevNumber);
+    } else {
+        subdisplay.textContent = `\u221A(${currentNumber})`;
+        currentNumber = operations[currentOperator](currentNumber);
+    }
     updateDisplay(currentNumber);
 
 }
