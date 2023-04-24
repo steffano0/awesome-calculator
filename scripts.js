@@ -2,7 +2,7 @@
         "+": (a,b) => +a + +b,
         "-": (a,b) => +a - +b,
         "x": (a,b) => +a * +b,
-        "/": (a,b) => +a/+b,
+        "/": (a,b) => +a / +b,
         "^": (a,b) => a ** b,
         "√": (a) => Math.sqrt(a),
         "%": (a) => a/100,
@@ -47,6 +47,11 @@ function updateCurrentNumber () {
         updateDisplay(prevNumber);
         updateSubDisplay();
     }  else if (currentNumber != "") { 
+        if (currentNumber == "0" && currentOperator == "/") {
+            updateDisplay("CANNOT DIVIDE BY ZERO");
+            return;
+        } 
+            
         temp = prevNumber;
         prevNumber = operations[currentOperator](temp, currentNumber);
         updateOperator(this);
@@ -84,8 +89,14 @@ function manageSquareRoot() {
 
 function managePercentage () {
     currentOperator = "%";
-    subdisplay.textContent = `${currentNumber}%`;
-    currentNumber = operations[currentOperator](currentNumber);
+    if (currentNumber == "") {
+        subdisplay.textContent = `${prevNumber}%`;
+        currentNumber = operations[currentOperator](prevNumber);
+    } else {
+        subdisplay.textContent = `${currentNumber}%`;
+        currentNumber = operations[currentOperator](currentNumber);
+    
+    }
     updateDisplay(currentNumber);
 }
 
@@ -111,7 +122,10 @@ function manageClearEntry () {
 function manageEqual () {
     if (currentOperator == "" || currentNumber == "" || prevNumber == "") {
         return;
-    }
+    } else if (currentNumber == 0 && currentOperator == "/") {
+        updateDisplay("CANNOT DIVIDE BY ZERO");
+        return;
+    } 
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
     updateDisplay(currentNumber);
@@ -120,8 +134,11 @@ function manageEqual () {
 }
 
 function manageDivideOne () {
-    
     currentOperator = "/"
+    if (currentNumber == 0) {
+        updateDisplay("CANNOT DIVIDE BY ZERO");
+        return;
+    }
     subdisplay.textContent = `1/(${currentNumber})`;
     currentNumber = operations[currentOperator](1, currentNumber);
     updateDisplay(currentNumber);
