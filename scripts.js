@@ -14,7 +14,7 @@ function checkNumberLength () {
     if (lengthNumber < 16 && currentNumber != 0) {
         currentNumber += this.textContent;
         updateDisplay(currentNumber);
-    } else if (currentNumber == 0) {
+    } else {
         currentNumber = ""
         currentNumber += this.textContent;
         updateDisplay(currentNumber);
@@ -149,6 +149,11 @@ function manageDivideOne () {
     
     
 }
+
+function invertSign() {
+    currentNumber = currentNumber * -1;
+    updateDisplay(currentNumber);
+}
         
    
     
@@ -159,6 +164,7 @@ const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
 const percentage = document.querySelector(".percentage");
 const divideOne = document.querySelector(".divide-one");
+const changeSign = document.querySelector(".change-sign");
 const del = document.querySelector(".delete");
 const clear = document.querySelector(".clear");
 const clearEntry = document.querySelector(".clear-entry");
@@ -171,6 +177,7 @@ operators.forEach(operator => operator.addEventListener("click",updateCurrentNum
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
 percentage.addEventListener("click", managePercentage);
+changeSign.addEventListener("click", invertSign);
 divideOne.addEventListener("click", manageDivideOne);
 del.addEventListener("click", manageDel);
 clear.addEventListener("click", manageClear);
