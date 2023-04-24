@@ -101,7 +101,11 @@ function managePercentage () {
 }
 
 function manageDel () {
-    currentNumber = currentNumber.slice(0, -1);
+    if (currentNumber.length == 1) {
+        currentNumber = "0";
+    } else {
+        currentNumber = currentNumber.slice(0, -1);
+    }
     updateDisplay(currentNumber);
 
 }
