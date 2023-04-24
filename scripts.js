@@ -8,13 +8,13 @@
         "%": (a) => a/100,
     };
 
-// Check if the number displayed is less than 16 digits
+
 function checkNumberLength () {
     const lengthNumber = currentNumber.length;
-    if (lengthNumber < 16 && currentNumber != "0") {
+    if (lengthNumber < 16 && currentNumber != 0) {
         currentNumber += this.textContent;
         updateDisplay(currentNumber);
-    } else if (currentNumber == "0") {
+    } else if (currentNumber == 0) {
         currentNumber = ""
         currentNumber += this.textContent;
         updateDisplay(currentNumber);
@@ -47,7 +47,7 @@ function updateCurrentNumber () {
         updateDisplay(prevNumber);
         updateSubDisplay();
     }  else if (currentNumber != "") { 
-        if (currentNumber == "0" && currentOperator == "/") {
+        if (currentNumber == 0 && currentOperator == "/") {
             updateDisplay("CANNOT DIVIDE BY ZERO");
             return;
         } 
@@ -102,7 +102,7 @@ function managePercentage () {
 
 function manageDel () {
     if (currentNumber.length == 1) {
-        currentNumber = "0";
+        currentNumber = 0;
     } else {
         currentNumber = currentNumber.slice(0, -1);
     }
@@ -110,15 +110,15 @@ function manageDel () {
 
 }
 function manageClear() {
-    currentNumber = "0";
-    prevNumber = "";
+    currentNumber = 0;
+    prevNumber = 0;
     currentOperator = "";
     updateDisplay(currentNumber);
-    updateSubDisplay();
+    subdisplay.textContent = "";
 }
 
 function manageClearEntry () {
-    currentNumber = "0";
+    currentNumber = 0;
     updateDisplay(currentNumber);
 }
 
