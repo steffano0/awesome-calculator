@@ -137,6 +137,15 @@ function manageEqual () {
    
 }
 
+function addDot() {
+    if (currentNumber.includes(".")) {
+        return;
+    } else {
+        currentNumber += ".";
+        updateDisplay(currentNumber);
+    }
+}
+
 function manageDivideOne () {
     currentOperator = "/"
     if (currentNumber == 0) {
@@ -160,11 +169,13 @@ function invertSign() {
 let prevNumber = 0;
 let currentNumber = 0;
 let currentOperator = "";
+
 const equal = document.querySelector(".equal");
 const squareRoot = document.querySelector(".square-root");
 const percentage = document.querySelector(".percentage");
 const divideOne = document.querySelector(".divide-one");
 const changeSign = document.querySelector(".change-sign");
+const dot = document.querySelector(".dot");
 const del = document.querySelector(".delete");
 const clear = document.querySelector(".clear");
 const clearEntry = document.querySelector(".clear-entry");
@@ -172,6 +183,7 @@ const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
 const subdisplay = document.querySelector(".subdisplay");
+
 numbers.forEach(number => number.addEventListener("click", checkNumberLength));
 operators.forEach(operator => operator.addEventListener("click",updateCurrentNumber));
 equal.addEventListener("click", manageEqual);
@@ -182,6 +194,7 @@ divideOne.addEventListener("click", manageDivideOne);
 del.addEventListener("click", manageDel);
 clear.addEventListener("click", manageClear);
 clearEntry.addEventListener("click", manageClearEntry);
+dot.addEventListener("click", addDot);
 
 
 
