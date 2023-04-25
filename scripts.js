@@ -11,7 +11,7 @@
 
 function checkNumberLength () {
     const lengthNumber = currentNumber.length;
-    if (lengthNumber < 16 && currentNumber != 0) {
+    if (lengthNumber < 16 && currentNumber !== 0) {
         currentNumber += this.textContent;
         updateDisplay(currentNumber);
     } else {
@@ -41,7 +41,7 @@ function updateOperator (oper) {
 
 function updateCurrentNumber () {
     let temp = "";
-    if (prevNumber == 0 && currentNumber != "") {
+    if (prevNumber === 0 && currentNumber !== "") {
         prevNumber = currentNumber;
         updateOperator(this);
         updateDisplay(prevNumber);
@@ -56,6 +56,7 @@ function updateCurrentNumber () {
         prevNumber = operations[currentOperator](temp, currentNumber);
         updateOperator(this);
         updateDisplay(prevNumber);
+        updateSubDisplay(); 
         
     } else if (currentNumber == "") {
         updateOperator(this);
@@ -101,11 +102,8 @@ function managePercentage () {
 }
 
 function manageDel () {
-    if (currentNumber.length == 1) {
-        currentNumber = 0;
-    } else {
-        currentNumber = currentNumber.slice(0, -1);
-    }
+    
+    currentNumber = currentNumber.slice(0, -1);
     updateDisplay(currentNumber);
 
 }
@@ -113,20 +111,20 @@ function manageClear() {
     currentNumber = 0;
     prevNumber = 0;
     currentOperator = "";
-    updateDisplay(currentNumber);
+    updateDisplay("");
     subdisplay.textContent = "";
 }
 
 function manageClearEntry () {
     currentNumber = 0;
-    updateDisplay(currentNumber);
+    updateDisplay("");
 }
 
     
 function manageEqual () {
-    if (currentOperator == "" || currentNumber == "" || prevNumber == "") {
+    if (currentOperator === "" || currentNumber === "" || prevNumber === "") {
         return;
-    } else if (currentNumber == 0 && currentOperator == "/") {
+    } else if (currentNumber === 0 && currentOperator === "/") {
         updateDisplay("CANNOT DIVIDE BY ZERO");
         return;
     } 
@@ -148,7 +146,7 @@ function addDot() {
 
 function manageDivideOne () {
     currentOperator = "/"
-    if (currentNumber == 0) {
+    if (currentNumber === 0) {
         updateDisplay("CANNOT DIVIDE BY ZERO");
         return;
     }
