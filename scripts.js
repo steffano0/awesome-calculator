@@ -124,7 +124,7 @@ function manageClearEntry () {
 function manageEqual () {
     if (currentOperator === "" || currentNumber === "" || prevNumber === "") {
         return;
-    } else if (currentNumber === 0 && currentOperator === "/") {
+    } else if (currentNumber == 0 && currentOperator === "/") {
         updateDisplay("CANNOT DIVIDE BY ZERO");
         return;
     } 
