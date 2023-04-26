@@ -2,7 +2,7 @@
         "+": (a,b) => +a + +b,
         "-": (a,b) => +a - +b,
         "x": (a,b) => +a * +b,
-        "/": (a,b) => +a / +b,
+        "÷": (a,b) => +a / +b,
         "^": (a,b) => a ** b,
         "√": (a) => Math.sqrt(a),
         "%": (a) => a/100,
@@ -31,7 +31,7 @@ function updateOperator (oper) {
     } else if (operator.contains("multiply")) {
         currentOperator = "x";
     } else if (operator.contains("divide")) {
-        currentOperator = "/";
+        currentOperator = "÷";
     } else if (operator.contains("power")) {
         currentOperator = "^";
     }
@@ -47,7 +47,7 @@ function updateCurrentNumber () {
         updateDisplay(prevNumber);
         updateSubDisplay();
     }  else if (currentNumber != "") { 
-        if (currentNumber == 0 && currentOperator == "/") {
+        if (currentNumber == 0 && currentOperator == "÷") {
             updateDisplay("CANNOT DIVIDE BY ZERO");
             return;
         } 
@@ -124,7 +124,7 @@ function manageClearEntry () {
 function manageEqual () {
     if (currentOperator === "" || currentNumber === "" || prevNumber === "") {
         return;
-    } else if (currentNumber == 0 && currentOperator === "/") {
+    } else if (currentNumber == 0 && currentOperator === "÷") {
         updateDisplay("CANNOT DIVIDE BY ZERO");
         return;
     } 
@@ -145,7 +145,7 @@ function addDot() {
 }
 
 function manageDivideOne () {
-    currentOperator = "/"
+    currentOperator = "÷"
     if (currentNumber === 0) {
         updateDisplay("CANNOT DIVIDE BY ZERO");
         return;
