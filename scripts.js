@@ -9,7 +9,7 @@
     };
 
 
-function checkNumberLength () {
+function updateNumberDisplayed () {
     const lengthNumber = currentNumber.length;
     if (lengthNumber < 16 && currentNumber !== 0) {
         currentNumber += this.textContent;
@@ -39,11 +39,11 @@ function updateOperator (oper) {
 }
 
 
-function updateCurrentNumber () {
+function updateCurrentNumber (operator) {
     let temp = "";
     if (prevNumber === 0 && currentNumber !== "") {
         prevNumber = currentNumber;
-        updateOperator(this);
+        currentOperator = operator;
         updateDisplay(prevNumber);
         updateSubDisplay();
     }  else if (currentNumber != "") { 
@@ -54,12 +54,12 @@ function updateCurrentNumber () {
             
         temp = prevNumber;
         prevNumber = operations[currentOperator](temp, currentNumber);
-        updateOperator(this);
+        currentOperator = operator;
         updateDisplay(prevNumber);
         updateSubDisplay(); 
         
     } else if (currentNumber == "") {
-        updateOperator(this);
+        currentOperator = operator;
         updateSubDisplay(); 
     }
     currentNumber = ""; 
@@ -182,8 +182,8 @@ const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
 const subdisplay = document.querySelector(".subdisplay");
 
-numbers.forEach(number => number.addEventListener("click", checkNumberLength));
-operators.forEach(operator => operator.addEventListener("click",updateCurrentNumber));
+numbers.forEach(number => number.addEventListener("click", updateNumberDisplayed));
+operators.forEach(operator => operator.addEventListener("click",() => updateCurrentNumber(operator.textContent)));
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
 percentage.addEventListener("click", managePercentage);
