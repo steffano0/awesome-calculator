@@ -9,12 +9,12 @@
     };
 
 
-function updateNumberDisplayed (number) {
+function updateNumber (number) {
     const lengthNumber = currentNumber.length;
     if (lengthNumber < 16 && currentNumber !== 0) {
         currentNumber += number;
         updateDisplay(currentNumber);
-    } else {
+    } else if (currentNumber == 0) {
         currentNumber = ""
         currentNumber += number;
         updateDisplay(currentNumber);
@@ -34,7 +34,7 @@ function setKeyboardOperator (operator) {
        
 
 
-function updateCurrentNumber (operator) {
+function operate (operator) {
     let temp = "";
     if (prevNumber === 0 && currentNumber !== "") {
         prevNumber = currentNumber;
@@ -117,7 +117,7 @@ function manageClearEntry () {
 
     
 function manageEqual () {
-    if (currentOperator === "" || currentNumber === "" || prevNumber === "") {
+    if (currentOperator === "" || currentNumber === "" || prevNumber === 0) {
         return;
     } else if (currentNumber == 0 && currentOperator === "÷") {
         updateDisplay("CANNOT DIVIDE BY ZERO");
@@ -126,7 +126,7 @@ function manageEqual () {
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
     updateDisplay(currentNumber);
-    prevNumber = "";
+    prevNumber = 0;
    
 }
 
@@ -161,12 +161,12 @@ function handleKeyboard(e) {
     const key = e.key;
     console.log(key);
     if (key >= 0 && key <= 9) {
-        updateNumberDisplayed(key);
+        updateNumber(key);
     } else if (["-", "+", "*", "/", "^"].includes(key)) {
-        updateCurrentNumber(setKeyboardOperator(key));
+        operate(setKeyboardOperator(key));
     } else if (key === "Enter" || key === "=") {
         manageEqual();
-    } else if (key === "Backspace") {
+    } else if (key === "Backspace") {  
         manageDel();
     }
 
@@ -194,8 +194,8 @@ const subdisplay = document.querySelector(".subdisplay");
 
 document.addEventListener("keydown", handleKeyboard)
 
-numbers.forEach(number => number.addEventListener("click", () => updateNumberDisplayed(number.textContent)));
-operators.forEach(operator => operator.addEventListener("click",() => updateCurrentNumber(operator.textContent)));
+numbers.forEach(number => number.addEventListener("click", () => updateNumber(number.textContent)));
+operators.forEach(operator => operator.addEventListener("click",() => operate(operator.textContent)));
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
 percentage.addEventListener("click", managePercentage);
