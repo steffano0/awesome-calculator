@@ -9,14 +9,14 @@
     };
 
 
-function updateNumberDisplayed () {
+function updateNumberDisplayed (number) {
     const lengthNumber = currentNumber.length;
     if (lengthNumber < 16 && currentNumber !== 0) {
-        currentNumber += this.textContent;
+        currentNumber += number;
         updateDisplay(currentNumber);
     } else {
         currentNumber = ""
-        currentNumber += this.textContent;
+        currentNumber += number;
         updateDisplay(currentNumber);
     }
 }
@@ -182,7 +182,7 @@ const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
 const subdisplay = document.querySelector(".subdisplay");
 
-numbers.forEach(number => number.addEventListener("click", updateNumberDisplayed));
+numbers.forEach(number => number.addEventListener("click", () => updateNumberDisplayed(number.textContent)));
 operators.forEach(operator => operator.addEventListener("click",() => updateCurrentNumber(operator.textContent)));
 equal.addEventListener("click", manageEqual);
 squareRoot.addEventListener("click", manageSquareRoot);
