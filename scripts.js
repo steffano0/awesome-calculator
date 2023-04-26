@@ -21,22 +21,17 @@ function updateNumberDisplayed (number) {
     }
 }
 
-function updateOperator (oper) {
-    let operator = oper.classList;
-
-    if (operator.contains("add")) {
-        currentOperator = "+";
-    } else if (operator.contains("substract")) {
-        currentOperator = "-";
-    } else if (operator.contains("multiply")) {
-        currentOperator = "x";
-    } else if (operator.contains("divide")) {
-        currentOperator = "÷";
-    } else if (operator.contains("power")) {
-        currentOperator = "^";
-    }
-
+function setKeyboardOperator (operator) {
+    
+    if (operator === "+") return "+"
+    if (operator === "-") return "-"
+    if (operator === "*") return "x"
+    if (operator === "/") return "÷"
+    if (operator === "^") return "^"
+    
 }
+
+       
 
 
 function updateCurrentNumber (operator) {
@@ -161,6 +156,21 @@ function invertSign() {
     currentNumber = currentNumber * -1;
     updateDisplay(currentNumber);
 }
+
+function handleKeyboard(e) {
+    const key = e.key;
+    console.log(key);
+    if (key >= 0 && key <= 9) {
+        updateNumberDisplayed(key);
+    } else if (["-", "+", "*", "/", "^"].includes(key)) {
+        updateCurrentNumber(setKeyboardOperator(key));
+    } else if (key === "Enter" || key === "=") {
+        manageEqual();
+    } else if (key === "Backspace") {
+        manageDel();
+    }
+
+}
         
    
     
@@ -181,6 +191,8 @@ const numbers = Array.from(document.querySelectorAll(".number"));
 const operators = Array.from(document.querySelectorAll(".operator"));
 const display = document.querySelector(".display");
 const subdisplay = document.querySelector(".subdisplay");
+
+document.addEventListener("keydown", handleKeyboard)
 
 numbers.forEach(number => number.addEventListener("click", () => updateNumberDisplayed(number.textContent)));
 operators.forEach(operator => operator.addEventListener("click",() => updateCurrentNumber(operator.textContent)));
