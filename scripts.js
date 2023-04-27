@@ -168,7 +168,11 @@ function handleKeyboard(e) {
         manageEqual();
     } else if (key === "Backspace") {  
         manageDel();
-    }
+    } else if (key === ".") {
+        addDot();
+    } 
+
+    
 
 }
         
