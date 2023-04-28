@@ -14,10 +14,12 @@ function updateNumber (number) {
     if (lengthNumber < 16 && currentNumber !== 0) {
         currentNumber += number;
         updateDisplay(currentNumber);
+        return;
     } else if (currentNumber == 0) {
         currentNumber = ""
         currentNumber += number;
         updateDisplay(currentNumber);
+        return;
     }
 }
 
@@ -31,34 +33,29 @@ function setKeyboardOperator (operator) {
     
 }
 
-       
-
-
 function operate (operator) {
-    let temp = "";
-    if (prevNumber === 0 && currentNumber !== "") {
-        prevNumber = currentNumber;
-        currentOperator = operator;
-        updateDisplay(prevNumber);
-        updateSubDisplay();
-    }  else if (currentNumber != "") { 
-        if (currentNumber == 0 && currentOperator == "÷") {
-            updateDisplay("CANNOT DIVIDE BY ZERO");
-            return;
-        } 
-            
-        temp = prevNumber;
-        prevNumber = operations[currentOperator](temp, currentNumber);
-        currentOperator = operator;
-        updateDisplay(prevNumber);
-        updateSubDisplay(); 
-        
-    } else if (currentNumber == "") {
-        currentOperator = operator;
-        updateSubDisplay(); 
-    }
-    currentNumber = ""; 
     
+    if (currentNumber === "" && prevNumber === "") {
+        return;
+    } else if (currentNumber !== "" && prevNumber === "") {
+        prevNumber = currentNumber;
+        currentNumber = "";
+        currentOperator = operator;
+        updateSubDisplay();
+        return;
+    } else if (currentNumber === "" && prevNumber !== "") {
+        currentOperator = operator;
+        updateSubDisplay();
+        return;
+    } else if (currentNumber !== "" && prevNumber !== "") {
+        prevNumber = operations[currentOperator](prevNumber, currentNumber);
+        currentOperator = operator;
+        currentNumber = "";
+        updateSubDisplay();
+        updateDisplay(prevNumber);
+        return;
+    } 
+
 }
     
 
@@ -71,30 +68,53 @@ function updateSubDisplay () {
 }
     
 function manageSquareRoot() {
-    currentOperator = "√";
-    if (currentNumber == "") {
+
+    if (currentNumber === "" && prevNumber === "") {
+        return;
+    } else if (currentNumber !== "") {
+        currentOperator = "√";
+        subdisplay.textContent = `\u221A(${currentNumber})`;
+        prevNumber = operations[currentOperator](currentNumber);
+        updateDisplay(prevNumber);
+        currentNumber = "";
+        return;
+    
+    } else if (currentNumber === "") {
+        currentOperator = "√";
         subdisplay.textContent = `\u221A(${prevNumber})`;
         currentNumber = operations[currentOperator](prevNumber);
-    } else {
-        subdisplay.textContent = `\u221A(${currentNumber})`;
-        currentNumber = operations[currentOperator](currentNumber);
+        updateDisplay(currentNumber);
+        prevNumber = "";
+        return;
     }
-    updateDisplay(currentNumber);
-
 }
+
+
+    
 
 function managePercentage () {
-    currentOperator = "%";
-    if (currentNumber == "") {
+
+    if (currentNumber === "" && prevNumber === "") {
+        return;
+    } else if (currentNumber !== "") {
+        currentOperator = "%"
+        subdisplay.textContent = `${currentNumber}%`;
+        prevNumber = operations[currentOperator](currentNumber);
+        updateDisplay(prevNumber);
+        currentNumber = "";
+        return;
+        
+    } else if (currentNumber === "") {
+        currentOperator = "%"
         subdisplay.textContent = `${prevNumber}%`;
         currentNumber = operations[currentOperator](prevNumber);
-    } else {
-        subdisplay.textContent = `${currentNumber}%`;
-        currentNumber = operations[currentOperator](currentNumber);
-    
-    }
-    updateDisplay(currentNumber);
+        updateDisplay(currentNumber);
+        prevNumber = "";
+        return;
+    } 
+        
 }
+     
 
 function manageDel () {
     
@@ -103,30 +123,31 @@ function manageDel () {
 
 }
 function manageClear() {
-    currentNumber = 0;
-    prevNumber = 0;
+    currentNumber = "";
+    prevNumber = "";
     currentOperator = "";
     updateDisplay("");
     subdisplay.textContent = "";
 }
 
 function manageClearEntry () {
-    currentNumber = 0;
+    currentNumber = "";
     updateDisplay("");
 }
 
     
 function manageEqual () {
-    if (currentOperator === "" || currentNumber === "" || prevNumber === 0) {
+    if (currentOperator === "" || currentNumber === "" || prevNumber === "") {
         return;
     } else if (currentNumber == 0 && currentOperator === "÷") {
         updateDisplay("CANNOT DIVIDE BY ZERO");
+        currentNumber = "";
         return;
     } 
     subdisplay.textContent = `${prevNumber} ${currentOperator} ${currentNumber} =`;
     currentNumber = operations[currentOperator](prevNumber, currentNumber);
     updateDisplay(currentNumber);
-    prevNumber = 0;
+    prevNumber = "";
    
 }
 
@@ -140,19 +161,45 @@ function addDot() {
 }
 
 function manageDivideOne () {
-    currentOperator = "÷"
-    if (currentNumber === 0) {
-        updateDisplay("CANNOT DIVIDE BY ZERO");
+    if (currentNumber === "" && prevNumber === "") {
         return;
-    }
-    subdisplay.textContent = `1/(${currentNumber})`;
-    currentNumber = operations[currentOperator](1, currentNumber);
-    updateDisplay(currentNumber);
-    
-    
+    } else if (currentNumber !== "") {
+        currentOperator = "÷"
+        subdisplay.textContent = `1/(${currentNumber})`;
+        if (currentNumber == 0) {
+            updateDisplay("CANNOT DIVIDE BY ZERO");
+            currentNumber = "";
+            return;
+        }
+        prevNumber = operations[currentOperator](1,currentNumber);
+        updateDisplay(prevNumber);
+        currentNumber = "";
+        return;
+        
+    } else if (currentNumber === "") {
+        currentOperator = "÷"
+        subdisplay.textContent = `1/(${prevNumber})`;
+        if(prevNumber == 0) {
+            updateDisplay("CANNOT DIVIDE BY ZERO");
+            prevNumber = "";
+            return;
+        }
+        currentNumber = operations[currentOperator](1,prevNumber);
+        updateDisplay(currentNumber);
+        prevNumber = "";
+        return;
+    } 
+        
 }
 
+    
+    
+    
+
 function invertSign() {
+    if (currentNumber === ""){
+        return;
+    }
     currentNumber = currentNumber * -1;
     updateDisplay(currentNumber);
 }
@@ -171,15 +218,15 @@ function handleKeyboard(e) {
     } else if (key === ".") {
         addDot();
     } 
+}
 
     
 
-}
         
    
     
-let prevNumber = 0;
-let currentNumber = 0;
+let prevNumber = "";
+let currentNumber = "";
 let currentOperator = "";
 
 const equal = document.querySelector(".equal");
