@@ -1,12 +1,12 @@
-    const operations = {
-        "+": (a,b) => +a + +b,
-        "-": (a,b) => +a - +b,
-        "x": (a,b) => +a * +b,
-        "÷": (a,b) => +a / +b,
-        "^": (a,b) => a ** b,
-        "√": (a) => Math.sqrt(a),
-        "%": (a) => a/100,
-    };
+const operations = {
+    "+": (a,b) => +a + +b,
+    "-": (a,b) => +a - +b,
+    "x": (a,b) => +a * +b,
+    "÷": (a,b) => +a / +b,
+    "^": (a,b) => a ** b,
+    "√": (a) => Math.sqrt(a),
+    "%": (a) => a/100,
+};
 
 
 function updateNumber (number) {
@@ -31,7 +31,7 @@ function setKeyboardOperator (operator) {
     if (operator === "/") return "÷"
     if (operator === "^") return "^"
     
-}
+} 
 
 function operate (operator) {
     
@@ -89,8 +89,6 @@ function manageSquareRoot() {
     }
 }
 
-
-    
 
 function managePercentage () {
 
@@ -193,9 +191,6 @@ function manageDivideOne () {
 }
 
     
-    
-    
-
 function invertSign() {
     if (currentNumber === ""){
         return;
@@ -223,8 +218,6 @@ function handleKeyboard(e) {
     
 
         
-   
-    
 let prevNumber = "";
 let currentNumber = "";
 let currentOperator = "";
